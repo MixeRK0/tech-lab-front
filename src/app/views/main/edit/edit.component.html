@@ -1,0 +1,7 @@
+<div class="pl-2 pt-1 pr-3 pb-2">
+    <h4>Редактирование результата</h4>
+    <label><i>Редактируемое слово: <b>{{resultUnitData.word}}</b></i></label>
+    <cui-select-control [value]="resultUnitDataClone.morf" [label]="'Морфологическая часть речи'" [options]="enableMorfOptions" (changedByUser)="resultUnitDataClone.morf = $event"></cui-select-control>
+    <cui-select-control [value]="resultUnitDataClone.synt" [label]="'Синтаксический член предложения'" [options]="enableSyntOptions" (changedByUser)="resultUnitDataClone.synt = $event"></cui-select-control>
+    <button class="btn btn-success" (click)="UpdateData()">OK</button>
+</div>

@@ -1,0 +1,50 @@
+.fullscreen:-moz-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+.fullscreen:-webkit-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+.fullscreen:-ms-fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+.fullscreen:fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+.ol-rotate {
+  top: 3em;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.mouse-coordinates {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  -ms-flex:0 0 25%;
+  flex:0 0 25%;
+  max-width:25%;
+  margin-left:75%;
+  text-align: right;
+}
+
+.modal-body-mouse-coordinates {
+  position: absolute;
+  bottom: 30px;
+  right: 25px;
+  -ms-flex:0 0 25%;
+  flex:0 0 25%;
+  max-width:25%;
+  margin-left:75%;
+  text-align: right;
+}

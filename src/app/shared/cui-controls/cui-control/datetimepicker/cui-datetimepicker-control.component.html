@@ -1,0 +1,22 @@
+<div [class]="groupClass">
+  <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+  <div [class]="controlClass">
+    <input type="datetime-local"
+           [id]="key"
+           [step]="1"
+           [min]="minDate"
+           [max]="maxDate"
+           [ngModel]="value"
+           (ngModelChange)="EmitValueChanged($event)"
+           [ngClass]="GetInputClasses()"
+           #input
+           cuiValidator
+           [validations]="validations"
+           [disabled]="isDisabled"
+           [tooltip]="errorMessageInTooltip ? GetErrorMessage() : null"
+    >
+    <div class="invalid-feedback text-left" *ngIf="!errorMessageInTooltip">
+      {{GetErrorMessage()}}
+    </div>
+  </div>
+</div>

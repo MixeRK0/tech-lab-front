@@ -1,0 +1,67 @@
+<div [class]=mainDivClass>
+    <label class="col-12 pt-1 pl-0" *ngIf="!IsWithoutLabel">{{label}}</label>
+    <div [ngClass]="isResponsiveTable ? 'col-12 p-0 table-responsive' : 'col-12 p-0'">
+        <table [class]=tableClass>
+            <tr>
+                <th *ngFor="let property of config.properties" [width]="property.width" class="p-2 border">
+                    {{property.label + ResolveUnitPostfix(property)}}
+                </th>
+                <th class="p-2 border" *ngIf="isEditable && !config.isDisableDeleting && list && list.length > 0">&nbsp;</th>
+            </tr>
+            <ng-template [ngIf]="list && list.length > 0" [ngIfElse]="emtyRow">
+                <ng-template ngFor let-item [ngForOf]="list" let-i="index">
+                    <tr>
+                        <td *ngFor="let property of config.properties"
+                            [class]="(property.is_editable ? 'p-0' : '') + ' border'">
+                            <div *ngIf="!property.is_editable">
+                                <cui-data-read-only-cell [property]="property"
+                                                         [model]="item"
+                                >
+                                </cui-data-read-only-cell>
+                            </div>
+
+                            <div *ngIf="property.is_editable">
+                                <cui-data-editable-cell [property]="property"
+                                                        [model]="item"
+                                                        [value]="cuiModelHelper.GetModelValue(item, property.key)"
+                                                        [context]="config.context(innerModel)"
+                                                        (changedByUser)="ChangedByUser(i, $event, property)"
+                                >
+                                </cui-data-editable-cell>
+                            </div>
+                        </td>
+
+                        <td class="button-cell border p-0 mt-1" *ngIf="isEditable && !config.isDisableDeleting">
+                            <button
+                                    [title]="'Удалить'"
+                                    [class]="'btn btn-danger icon icon-trash btn-sm'"
+                                    (click)="DeleteItem(item)"
+                            >
+                            </button>
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </ng-template>
+            <ng-template #emtyRow>
+                <tr>
+                    <td class="border" [attr.colspan]="config.properties.length + 1">Данные отсутствуют</td>
+                </tr>
+            </ng-template>
+        </table>
+        <div class="row" *ngIf="isEditable && config.newItem">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                    <button [title]="'Добавить'"
+                            [class]="'btn btn-success btn-block'"
+                            (click)="AddItem()"
+                    >
+                        Добавить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

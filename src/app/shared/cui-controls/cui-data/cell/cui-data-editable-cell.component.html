@@ -1,0 +1,343 @@
+<cui-switch-control *ngIf="property.inputType === 'switch'"
+                    [key]="property.key"
+                    [value]="value"
+                    [label]=ResolveLabel()
+                    [controlClass]=ResolveControlClass()
+                    [groupClass]=ResolveGroupClass()
+                    [labelClass]=ResolveLabelClass()
+                    (changedByUser)="ChangeByUser($event)"
+                    [validations]="property.validations"
+                    #cuiInput
+                    [isDisabled]="IsDisabledProperty(property, model)"
+                    [errorMessageInTooltip]="true"
+>
+
+</cui-switch-control>
+
+<!--<cui-checkbox *ngIf="property.inputType === 'switch'"-->
+<!--[key]="property.key"-->
+<!--[model]="model"-->
+<!--[label]=ResolveLabel()-->
+<!--[controlClass]=ResolveControlClass()-->
+<!--[groupClass]=ResolveGroupClass()-->
+<!--[labelClass]=ResolveLabelClass()-->
+<!--(changedByUser)="ChangeByUser($event)"-->
+<!--[validations]="property.validations"-->
+<!--#cuiInput-->
+<!--[isDisabled]="IsDisabledProperty(property, model)"-->
+<!--[errorMessageInTooltip]="true"-->
+<!--&gt;-->
+
+<!--</cui-checkbox>-->
+
+<cui-text-control *ngIf="property.inputType === 'text'"
+                  [key]="property.key"
+                  [value]="value"
+                  [label]=ResolveLabel()
+                  [controlClass]=ResolveControlClass()
+                  [groupClass]=ResolveGroupClass()
+                  [labelClass]=ResolveLabelClass()
+                  [unitName]="property.inputConfig ? property.inputConfig.unitName : null"
+                  (changedByUser)="ChangeByUser($event)"
+                  [validations]="property.validations"
+                  #cuiInput
+                  [isDisabled]="IsDisabledProperty(property, model)"
+                  [errorMessageInTooltip]="true"
+>
+
+</cui-text-control>
+
+<cui-textarea-control *ngIf="property.inputType === 'textarea'"
+                      [key]="property.key"
+                      [value]="value"
+                      [label]=ResolveLabel()
+                      [controlClass]=ResolveControlClass()
+                      [groupClass]=ResolveGroupClass()
+                      [labelClass]=ResolveLabelClass()
+                      [unitName]="property.inputConfig ? property.inputConfig.unitName : null"
+                      (changedByUser)="ChangeByUser($event)"
+                      [validations]="property.validations"
+                      #cuiInput
+                      [isDisabled]="IsDisabledProperty(property, model)"
+                      [errorMessageInTooltip]="true"
+>
+
+</cui-textarea-control>
+
+<cui-decimal-control *ngIf="property.inputType === 'decimal'"
+                     [key]="property.key"
+                     [value]="value"
+                     [label]=ResolveLabel()
+                     [controlClass]=ResolveControlClass()
+                     [groupClass]=ResolveGroupClass()
+                     [labelClass]=ResolveLabelClass()
+                     [unitName]="property.inputConfig ? property.inputConfig.unitName : null"
+                     (changedByUser)="ChangeByUser($event)"
+                     [validations]="property.validations"
+                     #cuiInput
+                     [isDisabled]="IsDisabledProperty(property, model)"
+                     [errorMessageInTooltip]="true"
+>
+
+</cui-decimal-control>
+
+<cui-telephone-control *ngIf="property.inputType === 'telephone'"
+                       [key]="property.key"
+                       [value]="value"
+                       [label]=ResolveLabel()
+                       [controlClass]=ResolveControlClass()
+                       [groupClass]=ResolveGroupClass()
+                       [labelClass]=ResolveLabelClass()
+                       (changedByUser)="ChangeByUser($event)"
+                       [validations]="property.validations"
+                       #cuiInput
+                       [isDisabled]="IsDisabledProperty(property, model)"
+                       [errorMessageInTooltip]="true"
+>
+
+</cui-telephone-control>
+
+<cui-select-control *ngIf="property.inputType === 'select'"
+                    [key]="property.key"
+                    [value]="value"
+                    [label]="ResolveLabel()"
+                    [options]="GetSelectOptions()"
+                    [controlClass]="ResolveControlClass()"
+                    [groupClass]="ResolveGroupClass()"
+                    [labelClass]="ResolveLabelClass()"
+                    (changedByUser)="ChangeByUser($event)"
+                    [validations]="property.validations"
+                    #cuiInput
+                    [isDisabled]="IsDisabledProperty(property, model)"
+                    (change)="ChangeByUser($event.target.value)"
+                    [errorMessageInTooltip]="true"
+                    [componentForOptions]="property.inputConfig.select.componentForOptions"
+                    [componentForOptionGroups]="property.inputConfig.select.componentForOptionGroups"
+                    [componentForLabel]="property.inputConfig.select.componentForLabel"
+                    [isMultiple]="property.inputConfig.select.isMultiple"
+                    [isHideSelectedOptions]="property.inputConfig.select.isHideSelectedOptions"
+                    [isShowAll]="property.inputConfig.select.isShowAll"
+>
+
+</cui-select-control>
+
+<cui-datepicker-control *ngIf="property.inputType === 'date_picker'"
+                        [key]="property.key"
+                        [value]="value"
+                        [label]=ResolveLabel()
+                        [controlClass]=ResolveControlClass()
+                        [groupClass]=ResolveGroupClass()
+                        [labelClass]=ResolveLabelClass()
+                        (changedByUser)="ChangeByUser($event)"
+                        [validations]="property.validations"
+                        #cuiInput
+                        [isDisabled]="IsDisabledProperty(property, model)"
+                        [errorMessageInTooltip]="true"
+>
+
+</cui-datepicker-control>
+
+<cui-timepicker-control *ngIf="property.inputType === 'time_picker'"
+                        [key]="property.key"
+                        [value]="value"
+                        [label]=ResolveLabel()
+                        [controlClass]=ResolveControlClass()
+                        [groupClass]=ResolveGroupClass()
+                        [labelClass]=ResolveLabelClass()
+                        (changedByUser)="ChangeByUser($event)"
+                        [validations]="property.validations"
+                        #cuiInput
+                        [isDisabled]="IsDisabledProperty(property, model)"
+                        [errorMessageInTooltip]="true"
+>
+
+</cui-timepicker-control>
+
+<cui-datetimepicker-control *ngIf="property.inputType === 'datetime_picker'"
+                            [key]="property.key"
+                            [value]="value"
+                            [label]=ResolveLabel()
+                            [controlClass]=ResolveControlClass()
+                            [groupClass]=ResolveGroupClass()
+                            [labelClass]=ResolveLabelClass()
+                            (changedByUser)="ChangeByUser($event)"
+                            [validations]="property.validations"
+                            #cuiInput
+                            [isDisabled]="IsDisabledProperty(property, model)"
+                            [errorMessageInTooltip]="true"
+>
+
+</cui-datetimepicker-control>
+
+
+<div *ngIf="property.inputType === 'typeahead'">
+    <cui-typeahead-control *ngIf="typeaheadInitSearchValue !== undefined"
+                           [key]="property.key"
+                           [model]="model"
+                           [dataSource]="property.inputConfig.typeahead.dataSource"
+                           [itemKey]="property.inputConfig.typeahead.itemKey"
+                           [searchKey]="property.inputConfig.typeahead.searchKey"
+                           [initSearchValue]="typeaheadInitSearchValue"
+                           [onSelect]="property.inputConfig.typeahead.onSelect"
+                           (changedByUser)="ChangeByUser($event)"
+    >
+    </cui-typeahead-control>
+</div>
+
+<cui-typeahead-new-control *ngIf="property.inputType === 'typeahead_new'"
+                           [key]="property.key"
+                           [value]="value"
+                           [label]="ResolveLabel()"
+                           [controlClass]="ResolveControlClass()"
+                           [groupClass]="ResolveGroupClass()"
+                           [labelClass]="ResolveLabelClass()"
+                           (changedByUser)="ChangeByUser($event)"
+                           [validations]="property.validations"
+                           #cuiInput
+                           [isDisabled]="IsDisabledProperty(property, model)"
+                           (change)="ChangeByUser($event.target.value)"
+                           [errorMessageInTooltip]="true"
+                           [dataSource]="property.inputConfig.typeahead_new.dataSource"
+                           [setupStartValueFunction]="property.inputConfig.typeahead_new.setupStartValueFunction"
+                           [componentForOptions]="property.inputConfig.typeahead_new.componentForOptions"
+                           [componentForOptionGroups]="property.inputConfig.typeahead_new.componentForOptionGroups"
+                           [componentForLabel]="property.inputConfig.typeahead_new.componentForLabel"
+>
+
+</cui-typeahead-new-control>
+
+<cui-progressbar-control *ngIf="property.inputType === 'progressbar'"
+                         [key]="property.key"
+                         [value]="value"
+                         [label]="ResolveLabel()"
+                         [controlClass]="ResolveControlClass()"
+                         [groupClass]="ResolveGroupClass()"
+                         [labelClass]="ResolveLabelClass()"
+                         (changedByUser)="ChangeByUser($event)"
+                         [validations]="property.validations"
+                         #cuiInput
+                         [isDisabled]="IsDisabledProperty(property, model)"
+                         (change)="ChangeByUser($event.target.value)"
+                         [errorMessageInTooltip]="true"
+                         [isShowBarLabel]="property.inputConfig.progressbar.isShowBarLabel"
+                         [isStriped]="property.inputConfig.progressbar.isStriped"
+                         [isAnimate]="property.inputConfig.progressbar.isAnimate"
+                         [barLabel]="property.inputConfig.progressbar.barLabel(model)"
+                         [type]="property.inputConfig.progressbar.type ? property.inputConfig.progressbar.type(model) : 'info'"
+                         [max]="property.inputConfig.progressbar.max ? property.inputConfig.progressbar.max(model) : 100"
+>
+
+</cui-progressbar-control>
+
+<cui-ol-point-control *ngIf="property.inputType === 'ol_point'"
+                      [key]="property.key"
+                      [value]="value"
+                      [model]="model"
+                      [label]="ResolveLabel()"
+                      [controlClass]="ResolveControlClass()"
+                      [groupClass]="ResolveGroupClass() + ' p-1'"
+                      [labelClass]="ResolveLabelClass()"
+                      [CRS]="property.inputConfig.mapData.CRS(model)"
+                      (changedByUser)="ChangeByUser($event)"
+                      [validations]="property.validations"
+                      [isDisabled]="IsDisabledProperty(property, model)"
+                      [errorMessageInTooltip]="true"
+>
+
+</cui-ol-point-control>
+
+<cui-ol-point-special-control *ngIf="property.inputType === 'ol_point_special'"
+                              [key]="property.key"
+                              [value]="value"
+                              [model]="model"
+                              [label]="ResolveLabel()"
+                              [controlClass]="ResolveControlClass()"
+                              [groupClass]="ResolveGroupClass() + ' p-1'"
+                              [labelClass]="ResolveLabelClass()"
+                              [CRS]="property.inputConfig.mapData.CRS(model)"
+                              (changedByUser)="ChangeByUser($event)"
+                              [validations]="property.validations"
+                              [isDisabled]="IsDisabledProperty(property, model)"
+                              [errorMessageInTooltip]="true"
+                              [olSpecialData]="property.inputConfig.olSpecialData(model)"
+>
+
+</cui-ol-point-special-control>
+
+<cui-ol-line-control *ngIf="property.inputType === 'ol_line'"
+                     [key]="property.key"
+                     [value]="value"
+                     (changedByUser)="ChangeByUser($event)"
+                     [validations]="property.validations"
+                     [isDisabled]="IsDisabledProperty(property, model)"
+                     [errorMessageInTooltip]="true"
+                     [CRS]="property.inputConfig.mapData.CRS(model)"
+>
+
+</cui-ol-line-control>
+
+<cui-ol-polygon-control *ngIf="property.inputType === 'ol_polygon'"
+                        [key]="property.key"
+                        [value]="value"
+                        (changedByUser)="ChangeByUser($event)"
+                        [validations]="property.validations"
+                        [isDisabled]="IsDisabledProperty(property, model)"
+                        [errorMessageInTooltip]="true"
+                        [CRS]="property.inputConfig.mapData.CRS(model)"
+>
+
+</cui-ol-polygon-control>
+
+<cui-ol-polygon-special-control *ngIf="property.inputType === 'ol_polygon_special'"
+                                [key]="property.key"
+                                [value]="value"
+                                [CRS]="property.inputConfig.mapData.CRS(model)"
+                                (changedByUser)="ChangeByUser($event)"
+                                [validations]="property.validations"
+                                [isDisabled]="IsDisabledProperty(property, model)"
+                                [errorMessageInTooltip]="true"
+                                [olSpecialData]="property.inputConfig.olSpecialData(model)"
+>
+
+</cui-ol-polygon-special-control>
+
+<cui-ol-rectangle-control *ngIf="property.inputType === 'ol_rectangle'"
+                          [key]="property.key"
+                          [value]="value"
+                          (changedByUser)="ChangeByUser($event)"
+                          [validations]="property.validations"
+                          [isDisabled]="IsDisabledProperty(property, model)"
+                          [errorMessageInTooltip]="true"
+                          [CRS]="property.inputConfig.mapData.CRS(model)"
+                          [viewCenter]="property.inputConfig.mapData.viewCenter
+                          ? property.inputConfig.mapData.viewCenter(model) : null"
+>
+
+</cui-ol-rectangle-control>
+
+<cui-data-complex-cell *ngIf="property.inputType === 'complex'"
+                       [property]="property"
+                       [model]="model"
+                       [value]="value"
+                       [inComplex]="inComplex"
+                       [inTable]="property.inputConfig.complex.inTable"
+                       (changedByUser)="ChangeByUser($event)"
+                       [isChangedByUserOnModalHide]="property.inputConfig.complex.isChangedByUsedOnModalHide"
+>
+
+</cui-data-complex-cell>
+
+<cui-data-table-simple-cell *ngIf="property.inputType === 'table'"
+                            [config]="property.inputConfig.table.config"
+                            [model]="model"
+                            [value]="value"
+                            [label]="property.label"
+                            [mainDivClass]="'p-1'"
+                            [tableClass]="'table table-responsive-md mb-0'"
+                            [isEditable]="property.inputConfig.table.isEditable"
+                            [IsWithoutLabel]="property.inputConfig.table.isWithoutLabel"
+                            [isNeedUnitLabelForHeaders]="property.inputConfig.table.isNeedUnitLabelForHeaders"
+                            (changedByUser)="ChangeByUser($event)"
+>
+
+</cui-data-table-simple-cell>

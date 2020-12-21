@@ -1,0 +1,68 @@
+<table class="table table-bordered">
+  <tbody *ngIf="model">
+    <tr *ngFor="let property of config.properties">
+      <th>{{property.label}}</th>
+
+      <td>
+        <div *ngIf="!property.is_editable" class="td-content">
+          <cui-data-read-only-cell [property]="property" [model]="model">
+          </cui-data-read-only-cell>
+        </div>
+        <div *ngIf="property.is_editable" class="td-content">
+          <cui-data-editable-cell [property]="property"
+                                  [value]="cuiModelHelper.GetModelValue(model, property.key)"
+                                  (changedByUser)="cuiModelHelper.SetModelValue(this.model, property.key, $event)"
+                                  [model]="model">
+          </cui-data-editable-cell>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="!model">
+    <tr>
+      <td style="padding: 2% 0 2% 45% !important;">
+        <div class="sk-circle-fade">
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+          <div class="sk-circle-fade-dot"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr *ngIf="!config.isDisableSave && isEditable">
+      <td colspan="2">
+        <div class="form-group text-right">
+          <button *ngIf="isAvailableDelete"
+                  [title]="'Удалить'"
+                  [class]="'btn btn-danger m-1'"
+                  (click)="DeleteModel(model)"
+          >
+            Удалить
+          </button>
+          <button
+            *ngIf="isEditable"
+            [title]="'Сохранить'"
+            [class]="'btn btn-success m-1'"
+            (click)="SaveModel(model)"
+          >
+            Сохранить
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
+

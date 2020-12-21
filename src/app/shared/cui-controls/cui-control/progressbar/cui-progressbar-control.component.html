@@ -1,0 +1,16 @@
+<div [class]="groupClass">
+    <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+    <div [class]="controlClass">
+        <progressbar [value]="value"
+                     [type]="type"
+                     [striped]="isStriped"
+                     [animate]="isAnimate"
+                     [max]="max"
+        >
+            <span *ngIf="isShowBarLabel" style="color: black">{{barLabel}}</span>
+        </progressbar>
+        <div class="invalid-feedback text-left" *ngIf="!errorMessageInTooltip">
+            {{GetErrorMessage()}}
+        </div>
+    </div>
+</div>

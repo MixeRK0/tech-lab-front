@@ -1,0 +1,52 @@
+<div [class]="groupClass">
+  <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+  <div [class]="controlClass">
+    <ng-select [clearable]="false"
+               [id]="key"
+               [items]="items | async"
+               bindLabel="label"
+               bindValue="value"
+               [ngModel]="value"
+               (ngModelChange)="EmitValueChanged($event)"
+               [ngClass]="inputClass"
+               [disabled]="isDisabled"
+               [typeahead]="sourceSubject"
+    >
+      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+        <div *ngIf="!componentForOptions">
+          {{item.label}}
+        </div>
+        <dynamic-container *ngIf="componentForOptions"
+                     [data]="{item: item, index: index, searchTerm: search}"
+                     [componentClass]="componentForOptions"
+        >
+        </dynamic-container>
+      </ng-template>
+
+      <ng-template ng-label-tmp let-item="item">
+        <div *ngIf="!componentForLabel">
+          {{item.label}}
+        </div>
+        <dynamic-container *ngIf="componentForLabel"
+                     [data]="{item: item}"
+                     [componentClass]="componentForLabel"
+        >
+        </dynamic-container>
+      </ng-template>
+
+      <ng-template ng-optgroup-tmp let-item="item">
+        <div *ngIf="!componentForOptionGroups">
+          {{item.label}}
+        </div>
+        <dynamic-container *ngIf="componentForOptionGroups"
+                     [data]="{item: item}"
+                     [componentClass]="componentForOptionGroups"
+        >
+        </dynamic-container>
+      </ng-template>
+    </ng-select>
+  </div>
+  <div class="invalid-feedback text-left" *ngIf="!errorMessageInTooltip">
+    {{GetErrorMessage()}}
+  </div>
+</div>

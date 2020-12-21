@@ -1,0 +1,43 @@
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="card-group">
+          <div class="card p-4" style="border: 0 !important;">
+            <div class="card-body">
+              <h1>Авторизация</h1>
+              <p class="text-muted">Войдите в свой аккаунт</p>
+              <form>
+                <cui-email-control
+                        [key]="'email'"
+                        [value]="model.email"
+                        [model]="model"
+                        #cuiInput
+                        (changedByUser)="model.email = $event"
+                ></cui-email-control>
+                <cui-password-control
+                        [key]="'password'"
+                        [value]="model.password"
+                        [model]="model"
+                        [minLengthPassword]="5"
+                        #cuiInput
+                        (changedByUser)="model.password = $event"
+                ></cui-password-control>
+                <div class="row">
+                  <div class="col-6">
+                    <button type="submit" [ngClass]="{'btn btn-primary px-4': true, 'disabled': loading}" (click)="Login()">
+                      Войти
+                    </button>
+                  </div>
+                  <div class="col-6 text-right">
+                    <button type="button" class="btn btn-link px-0" (click)="GoToRequestResetPassword()">Востановить пароль</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

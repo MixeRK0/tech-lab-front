@@ -1,0 +1,21 @@
+<div class="form-group p-1" style="margin-bottom: 0 !important;">
+    <div>
+        <button
+                [title]="'Настроить на карте'"
+                [class]="'btn btn-info btn-sm btn-block'"
+                (click)="OpenModalForEditPolygonOnMap(template)"
+                [disabled]="isDisabled"
+        >
+            Выбрать на карте
+        </button>
+        <ng-template #template>
+            <cui-ol-polygon-select
+                    [CRS]="CRS"
+                    (coordinatesOfPolygonChanged)="ChangeValue($event)"
+                    (hideModal)="HideModal()"
+                    [coordinatesOfPolygon]="cuiModelHelper.GetModelValue(this.model, this.key)"
+            >
+            </cui-ol-polygon-select>
+        </ng-template>
+    </div>
+</div>

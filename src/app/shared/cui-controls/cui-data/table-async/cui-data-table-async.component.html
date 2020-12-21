@@ -1,0 +1,240 @@
+<div class="row mb-3" *ngIf="config.title || config.additionalData || IsNeedShowPagination()">
+  <div class="col-6">
+    <p *ngIf="config.title" [class]="'h' + (config.titleLevel ? config.titleLevel : 1)">{{config.title}}</p>
+    <div *ngIf="config.additionalData">
+      <p *ngFor="let data of config.additionalData()">
+        <i>{{data.label}}: </i><i>{{data.value}}</i>
+      </p>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="float-right">
+      <pagination *ngIf="IsNeedShowPagination()"
+                  [totalItems]="summaryData.totalCount"
+                  [(ngModel)]="summaryData.pagination.curPage"
+                  [itemsPerPage]="summaryData.pagination.pageSize"
+                  [maxSize]="10"
+                  [disabled]="isLoadingRows"
+                  [firstText]="'<<'"
+                  [previousText]="'<'"
+                  [nextText]="'>'"
+                  [lastText]="'>>'"
+                  [boundaryLinks]="true"
+                  (pageChanged)="SetPageAndUpdate($event.page)">
+      </pagination>
+    </div>
+  </div>
+</div>
+<div class="row mb-3" *ngIf="config.enableSearch">
+  <div class="col-6">
+    <input class="form-control" [(ngModel)]="searchString" [placeholder]="config.searchHint" [disabled]="isLoadingRows">
+  </div>
+  <div class="col-3">
+    <button class="btn btn-primary" (click)="UpdateDataOnPage()" [disabled]="isLoadingRows">Поиск</button>
+  </div>
+</div>
+<div [class]="this.config.isResponsive ? 'table-responsive' : ''">
+  <table class="table">
+    <tr>
+      <th *ngFor="let property of config.properties; index as i"
+          [width]="property.width"
+          [class]="ResolveTableHeaderColumnClass(property.enableSort, i)"
+          (click)="ResolveTableHeaderColumnClick(property, i)"
+      >
+        <div class="col-12">
+          {{property.label + ResolveUnitPostfix(property)}}
+        </div>
+      </th>
+      <th class="border text-center" *ngIf="IsNeedDrawButtonColumns()" [attr.colspan]="CountButtons()">
+        <a *ngIf="config.isEnableSort"
+           class="btn btn-link icon-close"
+           (click)="ClearSortData()"
+           title="Сбросить настройки сортировки"
+        >
+        </a>
+      </th>
+    </tr>
+    <ng-template [ngIf]="isLoadingRows" [ngIfElse]="loadedRows">
+      <tr>
+        <td class="border" [attr.colspan]="config.properties.length + 1" style="padding: 2% 0 2% 45% !important;">
+          <div class="sk-circle-fade">
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+            <div class="sk-circle-fade-dot"></div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #loadedRows>
+      <ng-template [ngIf]="list.length > 0" [ngIfElse]="emtyRow">
+        <ng-template ngFor let-item [ngForOf]="list" let-i="index">
+          <tr [ngClass]="ResolveClasses(i)">
+            <td *ngFor="let property of config.properties" [class]="(property.is_editable ? 'p-0' : '') + ' border'">
+              <div *ngIf="!property.is_editable">
+                <cui-data-read-only-cell [property]="property" [model]="item"></cui-data-read-only-cell>
+              </div>
+
+              <div *ngIf="property.is_editable">
+                <cui-data-editable-cell [property]="FilterUnitName(property)"
+                                        [model]="item"
+                                        [value]="cuiModelHelper.GetModelValue(item, property.key)"
+                                        (changedByUser)="OnUserChangeFunction(i, property, $event)"
+                >
+                </cui-data-editable-cell>
+              </div>
+            </td>
+            <ng-template [ngIf]="IsAvailableViewExpand()">
+              <td class="button-cell border">
+                <button
+                        *ngIf="IsClosedRow(i)"
+                        [title]="'Подробнее'"
+                        [class]="'btn btn-info icon icon-arrow-down btn-sm'"
+                        [disabled]="isLoadingRows || IsDisabledExpandForRow(item)"
+                        (click)="ExpandRow(i)"
+                >
+                </button>
+
+                <button
+                        *ngIf="IsExpandedRow(i)"
+                        [title]="'Скрыть подробную информацию'"
+                        [class]="'btn btn-info icon icon-arrow-up btn-sm'"
+                        [disabled]="isLoadingRows"
+                        (click)="CloseRow(i)"
+                >
+                </button>
+              </td>
+            </ng-template>
+
+            <ng-template [ngIf]="IsAvailableDelete()">
+              <td class="button-cell border">
+                <button
+                        [title]="'Удалить'"
+                        [class]="'btn btn-danger icon icon-trash btn-sm'"
+                        [disabled]="isLoadingRows"
+                        (click)="DeleteItem(item)"
+                >
+                </button>
+              </td>
+            </ng-template>
+
+            <ng-template [ngIf]="IsAvailableSave() && !IsAvailableAutoSave()">
+              <td class="button-cell border">
+                <button
+                        [title]="'Сохранить'"
+                        [class]="'btn btn-success icon icon-check btn-sm'"
+                        [disabled]="isLoadingRows"
+                        (click)="SaveItem(i)"
+                >
+                </button>
+              </td>
+            </ng-template>
+
+            <ng-template [ngIf]="IsAvailableCopy()">
+              <td class="button-cell border">
+                <button
+                        [title]="'Копировать'"
+                        [class]="'btn btn-warning icon icon-docs btn-sm'"
+                        [disabled]="isLoadingRows"
+                        (click)="CopyItem(i)"
+                >
+                </button>
+              </td>
+            </ng-template>
+
+            <ng-template ngFor let-button [ngForOf]="config.buttons || []" let-i="index">
+              <td class="button-cell border">
+                <button [title]="button.title"
+                        [class]="button.class + ' btn-sm'"
+                        [disabled]="button.isDisabled ? isLoadingRows || button.isDisabled(item) : isLoadingRows"
+                        (click)="button.action(item, list, this)"
+                >
+                </button>
+              </td>
+            </ng-template>
+          </tr>
+          <tr *ngIf="IsNeedDrawExpandBlockForRow(i)" [class]="'border expanded-row'">
+            <td [attr.colspan]="config.properties.length + CountButtons()" class="col-in-expanded-row">
+              <expanded-row [row]="item" [config]="config.expandView"></expanded-row>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
+      <ng-template #emtyRow>
+        <tr>
+          <td class="border" [attr.colspan]="config.properties.length + 1">Данные отсутствуют</td>
+        </tr>
+      </ng-template>
+    </ng-template>
+  </table>
+</div>
+<div class="row mt-3">
+  <div class="col-6">
+    <div *ngIf="config.enableSummaryInfo">
+      <p><i>Всего элементов: </i><i>{{summaryData.totalCount}}</i></p>
+      <p><i>Показаны с {{
+        (summaryData.pagination.curPage - 1) * summaryData.pagination.pageSize + 1
+        }} по {{
+        (summaryData.pagination.curPage - 1) * summaryData.pagination.pageSize + list.length
+        }}</i></p>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="float-right ml-3" *ngFor="let button of config.underTableButtons">
+      <button [title]="button.title"
+              [class]="button.class"
+              (click)="button.action()"
+      >
+        {{button.title}}
+      </button>
+    </div>
+
+    <div class="float-right ml-3">
+      <button *ngIf="IsAsync() && !config.isDisableRefresh"
+              [title]="'Обновить'"
+              [class]="'btn btn-primary btn-block'"
+              [disabled]="isLoadingRows"
+              (click)="UpdateDataOnPage()"
+      >
+        Обновить
+      </button>
+    </div>
+
+    <div class="float-right ml-3">
+      <button *ngIf="IsAvailableComplexUpdate()"
+              [title]="config.complexUpdateFunctionLabel ? config.complexUpdateFunctionLabel : 'Сохранить все'"
+              [class]="'btn btn-success btn-block'"
+              [disabled]="isLoadingRows"
+              (click)="SaveAllModels()"
+      >
+        Сохранить все
+      </button>
+    </div>
+
+    <div class="float-right ml-3">
+      <button *ngIf="IsAvailableAdd()"
+              [title]="'Добавить'"
+              [class]="'btn btn-success btn-block'"
+              [disabled]="isLoadingRows"
+              (click)="AddItem()"
+      >
+        Добавить
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

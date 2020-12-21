@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  prizmaServerSecurityUrl: 'http://localhost:20080/security',
+  serverUrl: 'http://localhost:20080',
 };
 
 /*

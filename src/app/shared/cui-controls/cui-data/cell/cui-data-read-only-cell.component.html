@@ -1,0 +1,9 @@
+<div [class]="ResolveGroupClass()">
+    <label *ngIf="inComplex && !inComplexTable" [class]="ResolveLabelClass()">{{label}}</label>
+    <div [class]="ResolveControlClass()">
+      <div [innerHTML]="SanitizeHtml(property.value(model))" *ngIf="property.is_html; else notHtml"></div>
+      <ng-template #notHtml>
+        {{property.value(model)}}
+      </ng-template>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<div [class]="groupClass">
+  <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+  <div [class]="controlClass">
+    <div class="input-group-prepend">
+      <span class="input-group-text">{{'X'}}</span>
+    </div>
+    <input [id]="longitudeKey"
+           [ngModel]="GetLongitudeValue()"
+           (ngModelChange)="SetLongitudeValue($event)"
+           [ngClass]="GetLongitudeClasses()"
+           [name]="longitudeKey"
+           [placeholder]="placeholder"
+           [tabindex]="tabIndex || 0"
+           cuiValidator
+           decimal
+           [validations]="validationsForSingleProp"
+           [disabled]="isDisabled"
+           style="border: 1px solid #c2cfd6 !important;"
+    />
+    <span class="input-group-text">{{'м'}}</span>
+    <div class="input-group-prepend">
+      <span class="input-group-text">{{'Y'}}</span>
+    </div>
+    <input [id]="latitudeKey"
+           [ngModel]="GetLatitudeValue()"
+           (ngModelChange)="SetLatitudeValue($event)"
+           [ngClass]="GetLatitudeClasses()"
+           [name]="latitudeKey"
+           [placeholder]="placeholder"
+           [tabindex]="tabIndex || 0"
+           cuiValidator
+           decimal
+           [validations]="validationsForSingleProp"
+           [disabled]="isDisabled"
+           style="border: 1px solid #c2cfd6 !important;"
+    />
+    <span class="input-group-text">{{'м'}}</span>
+    <div class="m-0">
+      <button
+              [title]="'Выбрать на карте'"
+              [class]="'btn btn-info'"
+              (click)="OpenModalForSelectCoordinatesOnMap(template)"
+              [disabled]="isDisabled"
+      >
+        Выбрать на карте
+      </button>
+      <ng-template #template>
+        <cui-ol-point-select-control
+                [key]="key"
+                [model]="value"
+                [modalRef]="modalRef"
+                [CRS]="CRS"
+                (coordinatesOfPointChanged)="ChangeValue($event)"
+        >
+        </cui-ol-point-select-control>
+      </ng-template>
+    </div>
+    <div class="invalid-feedback text-left" *ngIf="GetLatitudeControlErrors() || GetLongitudeControlErrors()">
+      <div *ngFor="let validation of availableValidations">
+        <div *ngIf="GetLatitudeControlErrors() && GetLatitudeControlErrors()[validation] ||
+                          GetLongitudeControlErrors() && GetLongitudeControlErrors()[validation]">
+          {{validationMessages[validation].message}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+
+<input [(ngModel)]="asyncSelected"
+       [typeahead]="items"
+       [typeaheadAsync]="true"
+       [typeaheadOptionsLimit]="7"
+       [typeaheadOptionField]="searchKey"
+       (typeaheadLoading)="SetLoading($event)"
+       (typeaheadOnSelect)="Select($event)"
+       (typeaheadNoResults)="SetNoResult($event)"
+       [typeaheadWaitMs]="400"
+       [typeaheadScrollable]="true"
+       class="form-control"
+>
+
+<div class="alert alert-info" *ngIf="typeaheadLoading">Загрузка</div>
+<div class="alert alert-warning" *ngIf="typeaheadNoResults">Результатов не найдено</div>

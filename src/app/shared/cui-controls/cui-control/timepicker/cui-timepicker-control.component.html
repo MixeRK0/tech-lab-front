@@ -1,0 +1,16 @@
+<div [class]="groupClass">
+    <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+    <div [class]="controlClass">
+          <input type="time"
+                 step="1"
+                 [id]="key"
+                 [ngModel]="value"
+                 (ngModelChange)="EmitValueChanged($event)"
+                 [ngClass]="GetInputClasses()"
+                 #input
+                 cuiValidator
+                 [validations]="validations"
+                 [disabled]="isDisabled"
+          >
+    </div>
+</div>

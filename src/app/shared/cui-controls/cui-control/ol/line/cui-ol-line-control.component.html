@@ -1,0 +1,24 @@
+<label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+<div class="row-equal row form-group">
+  <div class="col-9">
+    <label>Количество точек: {{model[key] ? model[key].length : 0}}</label>
+  </div>
+  <div>
+    <button
+      [title]="'Выбрать на карте'"
+      [class]="'btn btn-secondary icon icon-map btn-lg btn-block'"
+      (click)="OpenModalForEditLineOnMap(template)"
+      [disabled]="isDisabled"
+    >
+    </button>
+    <ng-template #template>
+        <cui-ol-line-select
+          [CRS]="CRS"
+          (coordinatesOfLineChanged)="ChangeValue($event)"
+          (hideModal)="HideModal()"
+          [coordinatesOfLine]="value"
+        >
+        </cui-ol-line-select>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+cui-data-view table .form-control {
+  border: none !important;
+  box-shadow: none !important; }
+
+cui-data-view table tr .form-control.is-invalid {
+  background-color: #fdcdcc !important; }
+
+cui-data-view table tr td, cui-data-view table tr th {
+  padding: 0 0.8rem !important;
+  vertical-align: center !important; }
+
+cui-data-view table table {
+  border-spacing: 0; }
+
+td, th {
+  padding: 0.1rem 0.8rem 0.1em 0.8rem !important;
+  vertical-align: center !important; }
+
+.td-content {
+  height: 40px; }
+
+.table .table {
+  background-color: #ffffff; }

@@ -1,0 +1,74 @@
+<div [class]="groupClass">
+  <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+  <div [class]="controlClass">
+    <ng-select [clearable]="false"
+               [closeOnSelect]="!isMultiple"
+               [id]="key"
+               [items]="options | async"
+               bindLabel="label"
+               bindValue="value"
+               [ngModel]="value"
+               (ngModelChange)="EmitValueChanged($event)"
+               [ngClass]="inputClass"
+               [disabled]="isDisabled"
+               [multiple]="isMultiple"
+               [hideSelected]="isHideSelectedOptions"
+    >
+      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+        <div *ngIf="!componentForOptions">
+          {{item.label}}
+        </div>
+        <dynamic-container *ngIf="componentForOptions"
+                     [data]="{item: item, index: index, searchTerm: search}"
+                     [componentClass]="componentForOptions"
+        >
+        </dynamic-container>
+      </ng-template>
+
+      <ng-template ng-label-tmp let-item="item" *ngIf="!isMultiple">
+        <div *ngIf="!componentForLabel">
+          {{item.label}}
+        </div>
+        <dynamic-container *ngIf="componentForLabel"
+                     [data]="{item: item}"
+                     [componentClass]="componentForLabel"
+        >
+        </dynamic-container>
+      </ng-template>
+
+      <ng-template ng-optgroup-tmp let-item="item">
+        <div *ngIf="!componentForOptionGroups">
+          {{item.label}}
+        </div>
+        <dynamic-container *ngIf="componentForOptionGroups"
+                     [data]="{item: item}"
+                     [componentClass]="componentForOptionGroups"
+        >
+        </dynamic-container>
+      </ng-template>
+
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" *ngIf="isMultiple && !isShowAll">
+        <div class="ng-value" *ngFor="let item of (items ? items.slice(0, isClosedMore ? 4 : undefined): [])">
+          <span class="ng-value-label">{{item.label}}</span>
+          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 4 && isClosedMore" (click)="isClosedMore = false">
+          <span class="ng-value-label">{{items.length - 4}} еще...</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 4 && !isClosedMore" (click)="isClosedMore = true">
+          <span class="ng-value-label">свернуть ...</span>
+        </div>
+      </ng-template>
+
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" *ngIf="isMultiple && isShowAll">
+        <div class="ng-value" *ngFor="let item of items.slice(0, undefined)">
+          <span class="ng-value-label">{{item.label}}</span>
+          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+        </div>
+      </ng-template>
+    </ng-select>
+  </div>
+  <div class="invalid-feedback text-left" *ngIf="!errorMessageInTooltip">
+    {{GetErrorMessage()}}
+  </div>
+</div>

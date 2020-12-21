@@ -1,0 +1,13 @@
+<div [class]="groupClass">
+    <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+    <div [class]="controlClass">
+        <input [type]="'file'"
+               [id]="key"
+               (change)="OpenFile($event)"
+               [placeholder]="placeholder"
+               [tabindex]="tabIndex || 0"
+               #input
+               [disabled]="isDisabled"
+        />
+    </div>
+</div>

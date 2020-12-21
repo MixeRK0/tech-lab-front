@@ -1,0 +1,8 @@
+  <ul class="nav nav-tabs">
+    <li class="nav-item" *ngFor="let tab of config.tabs">
+      <a [class]="ResolveTabStyle(tab)" (click)="ClickTab(tab)">{{tab.title}}</a>
+    </li>
+  </ul>
+<div class="nav-content">
+  <router-outlet></router-outlet>
+</div>

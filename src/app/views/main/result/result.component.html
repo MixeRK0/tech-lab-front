@@ -1,0 +1,103 @@
+<app-preloader [isLoading]="isLoading"></app-preloader>
+<div *ngIf="isLoading === false" class="pb-3">
+    <h4>Результат: </h4>
+    <div style="width: 100%" class="row pl-5 pr-5">
+        <div *ngFor="let resultUnitData of resultUnitsData" class="bukva">
+            <span class="morphem">{{MorfLabelResolve(resultUnitData.morf)}}</span>
+            <br>
+            <span [class]="'text ' + resultUnitData.synt">{{resultUnitData.word}}</span>
+            <button *ngIf="resultUnitData.morf !== 'sentence_delimiter'"
+                    class="btn btn-link icon icon-pencil" [title]="'Исправить ошибку'" (click)="OpenEdit(resultUnitData)"></button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-5 pl-4">
+        <span>
+            Показать предложения, где слово <input style="width: 100px" [(ngModel)]="findingWord"> является
+        </span>
+        </div>
+        <div class="col-3">
+            <cui-select-control [value]="findingMorf" [options]="enableMorfOptions" (changedByUser)="findingMorf = $event">
+            </cui-select-control>
+        </div>
+        <div class="col-1">
+            <span>и</span>
+        </div>
+        <div class="col-3">
+            <cui-select-control [value]="findingSynt" [options]="enableSyntOptions" (changedByUser)="findingSynt = $event">
+            </cui-select-control>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-info" (click)="GetFilterResults()">Применить фильтр</button>
+    </div>
+
+    <hr>
+
+    <h5 style="text-align: center">Морфологическая статистика текста</h5>
+    <div style="background: white; text-align: center" class="pt-3">
+        <table class="col-12 table-bordered">
+            <tr>
+                <td><b>Слово</b></td>
+                <td><b>СУЩ</b></td>
+                <td><b>ПРИЛ</b></td>
+                <td><b>ГЛАГ</b></td>
+                <td><b>НАР</b></td>
+                <td><b>СОЮЗ</b></td>
+                <td><b>ПРЕДЛ</b></td>
+                <td><b>ПРИЧ</b></td>
+                <td><b>ДЕЕПР</b></td>
+                <td><b>ЧИСЛ</b></td>
+                <td><b>МЕСТ</b></td>
+                <td><b>НЕОПРЕДЕЛЕНО</b></td>
+                <td><b>ИТОГО</b></td>
+            </tr>
+            <tr *ngFor="let stat of resultUnitsStat">
+                <td>{{stat.word}}</td>
+                <td>{{stat.sysh}}</td>
+                <td>{{stat.pril}}</td>
+                <td>{{stat.glag}}</td>
+                <td>{{stat.nar}}</td>
+                <td>{{stat.soyz}}</td>
+                <td>{{stat.predlog}}</td>
+                <td>{{stat.prich}}</td>
+                <td>{{stat.deepr}}</td>
+                <td>{{stat.chisl}}</td>
+                <td>{{stat.mest}}</td>
+                <td>{{stat.morf_undefined}}</td>
+                <td>{{stat.summary}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+
+    <h5 style="text-align: center">Синтаксическая статистика текста</h5>
+    <div style="background: white; text-align: center" class="pt-3">
+        <table class="col-12 table-bordered">
+            <tr>
+                <td><b>Слово</b></td>
+                <td><b>Определение</b></td>
+                <td><b>Обстоятельство</b></td>
+                <td><b>Сказуемое</b></td>
+                <td><b>Подлежащее</b></td>
+                <td><b>Дополнение</b></td>
+                <td><b>Не имеет синтаксического смысла</b></td>
+                <td><b>Не определено</b></td>
+                <td><b>Итого</b></td>
+            </tr>
+            <tr *ngFor="let stat of resultUnitsStat">
+                <td>{{stat.word}}</td>
+                <td>{{stat.opredel}}</td>
+                <td>{{stat.obstoyt}}</td>
+                <td>{{stat.double}}</td>
+                <td>{{stat.underline}}</td>
+                <td>{{stat.dopol}}</td>
+                <td>{{stat.not_set}}</td>
+                <td>{{stat.synt_undefined}}</td>
+                <td>{{stat.summary}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

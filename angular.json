@@ -28,7 +28,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/spinkit/spinkit.css",
+              "node_modules/simple-line-icons/css/simple-line-icons.css"
             ],
             "scripts": []
           },
@@ -92,7 +95,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/spinkit/spinkit.css",
+              "node_modules/simple-line-icons/css/simple-line-icons.css"
             ],
             "scripts": []
           }
@@ -123,6 +129,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "tech-lab-front"
+    }
+  },
+  "defaultProject": "tech-lab-front",
+  "cli": {
+    "analytics": "a50c3889-7c9b-4d06-a545-579a20afcdef"
+  }
 }

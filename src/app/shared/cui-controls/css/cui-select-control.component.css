@@ -1,0 +1,20 @@
+ng-select {
+  padding: 0; }
+
+:host /deep/ .ng-select-container {
+  border: none !important;
+  border-radius: 0; }
+
+.vertical-center {
+  display: flex;
+  align-items: center; }
+
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  box-sizing: content-box !important;
+  background: none !important;;
+  border: 0 !important;;
+  box-shadow: none !important;;
+  outline: 0 !important;;
+  cursor: default !important;;
+  width: 100% !important;;
+}

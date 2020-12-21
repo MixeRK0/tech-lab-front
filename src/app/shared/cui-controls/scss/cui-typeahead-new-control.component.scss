@@ -1,0 +1,8 @@
+ng-select {
+  padding: 0;
+}
+
+:host #{"/deep/"} .ng-select-container {
+  border: none !important;
+  border-radius: 0;
+}

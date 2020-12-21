@@ -1,0 +1,17 @@
+<div [class]="groupClass">
+  <label *ngIf="label" [class]="labelClass">{{label}}</label>
+  <div class="col-9 custom-control custom-checkbox">
+    <input
+      class="custom-control-input"
+      type="checkbox"
+      [id]="key"
+      [ngModel]="value"
+      (ngModelChange)="EmitValueChanged($event)"
+      #input
+      cuiValidator
+      [validations]="validations"
+      [disabled]="isDisabled"
+    />
+    <label [for]="key" class="custom-control-label"></label>
+  </div>
+</div>

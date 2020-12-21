@@ -1,0 +1,85 @@
+<p *ngIf="config.title" [class]="'h' + (config.titleLevel ? config.titleLevel : 1)">{{config.title}}</p>
+<div *ngIf="config.additionalData">
+  <p *ngFor="let data of config.additionalData()">
+    <i>{{data.label}}: </i><i>{{data.value}}</i>
+  </p>
+</div>
+
+<table class="table table-hover table-bordered table-responsive-sm table-responsive-md">
+  <thead>
+  <tr>
+    <th *ngFor="let property of config.properties" [width]="property.width">
+      {{property.label}}
+    </th>
+    <th *ngIf="config.buttons.length > 0">&nbsp;</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of FilterList(list); let i = index"
+        [ngClass]="ResolveClasses(i)">
+      <td *ngFor="let property of config.properties">
+
+        <div *ngIf="!property.is_editable">
+          <cui-data-read-only-cell [property]="property" [model]="item"></cui-data-read-only-cell>
+        </div>
+
+        <div *ngIf="property.is_editable">
+          <cui-data-editable-cell [property]="property"
+                                  [model]="item"
+                                  [value]="cuiModelHelper.GetModelValue(item, property.key)"
+                                  (changedByUser)="MarkAsChanged(i)"
+          >
+          </cui-data-editable-cell>
+        </div>
+      </td>
+      <td *ngIf="IsAvailableSave() || config.buttons.length > 0">
+        <div class="btn-group">
+          <button *ngFor="let button of config.buttons"
+                  [title]="button.title"
+                  [class]="button.class + ' ml-1 btn-sm'"
+                  (click)="button.action(item, list)"
+          >
+          </button>
+          <button
+            *ngIf="IsAvailableSave()"
+            [title]="'Сохранить'"
+            [class]="'btn btn-success icon icon-check ml-1 btn-sm'"
+            (click)="SaveModel(item)"
+          >
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td *ngIf="IsAvailableAdd() || IsAvailableComplexUpdate()" [attr.colspan]="config.properties.length + 1">
+        <div>
+          <div class="float-right ml-3">
+            <button *ngIf="IsAvailableComplexUpdate()"
+                    [title]="'Сохранить все'"
+                    [class]="'btn btn-success btn-block'"
+                    (click)="SaveAllModels()"
+            >
+              Сохранить все
+            </button>
+          </div>
+
+          <div class="float-right ml-3">
+            <button *ngIf="IsAvailableAdd()"
+                    [title]="'Добавить'"
+                    [class]="'btn btn-success btn-block'"
+                    (click)="AddItem()"
+            >
+              Добавить
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+

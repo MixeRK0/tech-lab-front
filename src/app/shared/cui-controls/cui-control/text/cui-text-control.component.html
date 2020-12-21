@@ -1,0 +1,25 @@
+<div [class]="groupClass">
+    <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+    <div [class]="controlClass">
+        <input [type]="inputType"
+               [id]="key"
+               [ngModel]="value"
+               (ngModelChange)="EmitValueChanged($event)"
+               [ngClass]="GetInputClasses()"
+               [placeholder]="placeholder"
+               [tabindex]="tabIndex || 0"
+               #input
+               cuiValidator
+               [validations]="validations"
+               [disabled]="isDisabled"
+               autocomplete="off"
+               [tooltip]="errorMessageInTooltip ? GetErrorMessage() : null"
+        />
+        <div class="input-group-append" *ngIf="unitName">
+          <span class="input-group-text">{{unitName}}</span>
+        </div>
+        <div class="invalid-feedback text-left" *ngIf="!errorMessageInTooltip">
+            {{GetErrorMessage()}}
+        </div>
+    </div>
+</div>

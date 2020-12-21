@@ -1,0 +1,19 @@
+<div [class]="groupClass">
+    <label *ngIf="label" [for]="key" [class]="labelClass">{{label}}</label>
+    <div [class]="controlClass">
+      <label class="switch switch-text switch-info switch-sm">
+        <input type="checkbox"
+               class="switch-input"
+               [id]="key"
+               [ngModel]="value"
+               (ngModelChange)="EmitValueChanged($event)"
+               #input
+               cuiValidator
+               [validations]="validations"
+               [disabled]="isDisabled"
+        >
+        <span class="switch-label" data-on="Да" data-off="Нет"></span>
+        <span class="switch-handle"></span>
+      </label>
+    </div>
+</div>
